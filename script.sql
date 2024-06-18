@@ -58,3 +58,31 @@ BEGIN
 	RAISE NOTICE 'Quantidade de alunos aprovados que estudaram sozinhos: %', p_qtde_aprov;
 END;
 $$
+
+-- 4 Salário versus estudos
+-- Dentre os alunos que têm salário maior que 410, quantos costumam se preparar com
+-- frequência (regularmente) para os exames? Escreva uma função que devolva esse número
+
+CREATE OR REPLACE FUNCTION fn_salario_estudo_regular() RETURNS INT
+LANGUAGE plpgsql
+AS $$
+DECLARE
+	v_qtde INT;
+BEGIN 	
+	SELECT count(salary) 
+	  FROM tb_student
+	WHERE salary = 5 
+	  AND prep_exam = 2
+	 INTO v_qtde;
+	 RETURN v_qtde;
+END;
+$$
+ 
+DO $$
+DECLARE
+	v_qtde INT;
+BEGIN
+	SELECT fn_salario_estudo_regular() INTO v_qtde;
+	RAISE NOTICE 'Quantidade de alunos que tem salario maior que 410 e se preparam regularmente: %', v_qtde;	
+END;
+$$
